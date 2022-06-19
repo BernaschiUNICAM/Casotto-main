@@ -1,4 +1,4 @@
 # Casotto
-Gruppo: LAG
+Gruppo: LAG <br>
 Partecipanti: Luigi Pepe, Alessandro Bernaschi, Giacomo Torrigiani
 
