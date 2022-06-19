@@ -22,6 +22,7 @@ public class InteractionManagerGestore
     @Autowired private GestoreAccount gestoreAccount;
     @Autowired private GestoreAttivita gestoreAttivita;
     @Autowired private GestoreProdotti gestoreProdotti;
+    @Autowired private GestoreOmbrelloni gestoreOmbrelloni;
     @Autowired private GestoreNotifiche gestoreNotifiche;
     @Autowired private Spiaggia spiaggia;
 
@@ -56,12 +57,13 @@ public class InteractionManagerGestore
      */
     public void gestioneStruttura() {
 
-        List<String> opzioniGestione = List.of("prodotti", "attivita");
+        List<String> opzioniGestione = List.of("prodotti", "attivita", "ombrelloni");
         String sceltaGestione = Acquisizione.scelta(opzioniGestione, s->String.valueOf(s.charAt(0)), System.out::println,
-                "\nSeleziona cosa desideri gestire (p per prodotti, a per attivita')", "Errore: opzione NON valida. Riprova.");
+                "\nSeleziona cosa desideri gestire (p per prodotti, a per attivita, o per ombrelloni)", "Errore: opzione NON valida. Riprova.");
 
         if(Objects.equals(sceltaGestione, "prodotti")) this.gestioneProdotti();
-        else this.gestioneAttivita();
+        	else if (Objects.equals(sceltaGestione, "attivita")) this.gestioneAttivita();
+        	else if (Objects.equals(sceltaGestione, "ombrelloni")) this.gestioneOmbrelloni();
     }
 
     private void gestioneAttivita() {
@@ -76,6 +78,13 @@ public class InteractionManagerGestore
                 this::selezioneProdottoDaRimuovere,
                 this::selezionaProdottoDaModificare,
                 this.gestoreProdotti::modificheProdotti);
+    }
+    
+    private void gestioneOmbrelloni() {
+        this.gestione(()->Acquisizione.acqParamOmbrellone(this.gestoreOmbrelloni),
+                this::selezioneOmbrelloneDaRimuovere,
+                this::selezionaOmbrelloneDaModificare,
+                this.gestoreOmbrelloni::modificheOmbrelloni);
     }
 
     /**
@@ -122,10 +131,15 @@ public class InteractionManagerGestore
         List<Attivita> attivita = this.gestoreAttivita.getAllAttivita();
         return this.selezionaOggettoDaRimuovere(attivita, attivita.stream().map(Attivita::getId).collect(Collectors.toList()));
     }
-
+    
     private Map<Prodotto, Boolean> selezioneProdottoDaRimuovere() {
         List<Prodotto> prodotti = this.gestoreProdotti.getAll();
         return this.selezionaOggettoDaRimuovere(prodotti, prodotti.stream().sequential().map(Prodotto::getId).collect(Collectors.toList()));
+    }
+    
+    private Map<Ombrellone, Boolean> selezioneOmbrelloneDaRimuovere() {
+        List<Ombrellone> ombrelloni = this.gestoreOmbrelloni.getAll();
+        return this.selezionaOggettoDaRimuovere(ombrelloni, ombrelloni.stream().map(Ombrellone::getId).collect(Collectors.toList()));
     }
 
     private <T> Map<T, Boolean> selezionaOggettoDaRimuovere(List<T> oggetti, List<Long> indici) {
@@ -172,6 +186,37 @@ public class InteractionManagerGestore
         daModificare.setNome( (dati[0]==null) ? daModificare.getNome() : (String)dati[0] );
         daModificare.setData( (dati[1]==null) ? daModificare.getData() : (LocalDate) dati[1] );
         daModificare.setNumeroposti( (dati[2]==null) ? daModificare.getNumeroposti() : (Integer)dati[2] );
+
+        return Map.of(daModificare, false);
+    }
+    
+    private Map<Ombrellone, Boolean> selezionaOmbrelloneDaModificare() {
+        boolean flagContinuare = true;
+        List<Ombrellone> ombrelloni = this.gestoreOmbrelloni.getAll();
+
+        if(ombrelloni.isEmpty()) return null;
+
+        Ombrellone daModificare = Acquisizione.scelta(ombrelloni, a->String.valueOf(a.getId()), a-> System.out.println(a.toString()), "Seleziona cio' che vuoi rimuovere: ",
+                "Errore: scelta NON valida. Riprova.");
+
+        Object[] dati = new Object[2];
+
+        while(flagContinuare) {
+            Map<String, Supplier<Object>> datiOmbrellone = Map.of(
+                    "numero", ()->dati[0]=Acquisizione.acqIntero("il numero dell'ombrellone", false),
+                    "fila", ()->dati[1]=Acquisizione.acqStringa("La fila: ", false));
+
+            String sceltaDatoDaModificare = Acquisizione.scelta(datiOmbrellone.keySet(), k->k, System.out::println,
+                    "\nSeleziona il dato da modificare: ", "Attenzione: scelta NON prevista. Riprovare.");
+
+            datiOmbrellone.get(sceltaDatoDaModificare).get();
+
+            flagContinuare = Acquisizione.scelta(List.of(true, false), v->String.valueOf(v.toString().charAt(0)), v-> {},
+                    "\nDesideri continuare con la modifica dei dati dell'ombrellone(t per si'/f per no)? : ", "Scelta non possibile. Riprova.");
+        }
+
+        daModificare.setNumero( (dati[0]==null) ? daModificare.getNumero() : (int)dati[0] );
+        daModificare.setFila( (dati[1]==null) ? daModificare.getFila() : (String) dati[1] );
 
         return Map.of(daModificare, false);
     }
@@ -247,6 +292,7 @@ public class InteractionManagerGestore
         if(confermaInvio)  this.gestoreNotifiche.invioNotifica(testoNotifica, gruppi, dataFine);
         else System.out.println("La notifica NON e' stata inviata.");
     }
+    
 
     /**
      * Metodo che permette di inserire un {@link Prezzo}

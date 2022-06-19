@@ -3,6 +3,7 @@ package it.unicam.cs.ids.Casotto;
 import it.unicam.cs.ids.Casotto.Classi.*;
 import it.unicam.cs.ids.Casotto.Interazione.Acquisizione;
 import it.unicam.cs.ids.Casotto.Interazione.InteractionManager;
+import it.unicam.cs.ids.Casotto.Interazione.InteractionManagerAddettoSpiaggia;
 import it.unicam.cs.ids.Casotto.Interazione.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +22,7 @@ import java.util.*;
 public class CasottoApplication {
 	@Autowired
 	private InteractionManager im;
+	
 
 	@Autowired
 	private Menu menu;

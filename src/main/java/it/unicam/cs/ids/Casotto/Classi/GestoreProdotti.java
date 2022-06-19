@@ -35,7 +35,7 @@ public class GestoreProdotti {
      * @param oggetto descrizione del {@link Prodotto} del quale si vuole conoscere il prezzo
      * @return il prezzo del {@link Prodotto} la cui descrizione corrisponde a quella passata come parametro
      */
-    public double getPrezzoOf(String oggetto) {
+   public double getPrezzoOf(String oggetto) {
         return prodottoRepository.findByOggetto(oggetto).getPrezzo();
     }
 

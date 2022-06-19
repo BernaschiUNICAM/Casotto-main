@@ -190,6 +190,15 @@ public class Acquisizione {
 
         return Map.of(gp.creazioneProdotto(nome, prezzo, quantita, tipo), false);
     }
+    
+    public static Map<Ombrellone, Boolean> acqParamOmbrellone(GestoreOmbrelloni go) {
+        sc.nextLine();
+
+        int numero = acqIntero("il numero dell'ombrellone", false);
+        String fila = acqStringa("la fila", false);
+  
+        return Map.of(go.creazioneOmbrellone(numero, fila), false);
+    }
 
     /**
      * Metodo per acquisire i parametri del {@link Prezzo}
@@ -208,6 +217,7 @@ public class Acquisizione {
 
         return spiaggia.addPrezzo(prezzo, meseInizio, meseFine, dataInizio, dataFine, durata);
     }
+    
 
     public static <T> T scelta(Collection<T> listaOggetti, Function<T, String> funzioneChiaveMappa, Consumer<T> consumerStampaOggetti, String fraseSelezione, String fraseErrore) {
         String scelta = "";

@@ -97,6 +97,14 @@ public class Ombrellone {
         if(prezzi==null) return;
         this.prezzi.addAll(prezzi);
     }
+    
+    public void setNumero(int numero) {
+    	this.numero=numero;
+    }
+    
+    public void setFila(String fila) {
+    	this.fila=fila;
+    }
 
     /**
      * Restituisce una rappresentazione, sotto forma di {@link String}, dell'ombrellone

@@ -20,6 +20,7 @@ public class InteractionManagerAddettoSpiaggia
     @Autowired private GestorePagamenti gestorePagamenti;
 
     @Autowired private GestoreProdotti gestoreProdotti;
+    
 
     private final Scanner sc = new Scanner(System.in);
 
@@ -106,4 +107,5 @@ public class InteractionManagerAddettoSpiaggia
         this.gestoreOrdinazione.setStato(ordinazione, Stato.CONSEGNATO);
         System.out.println("L'ordinazione e' stata consegnata. Lo stato dell'ordine e' stato aggiornato in 'CONSEGNATO'");
     }
+  
 }

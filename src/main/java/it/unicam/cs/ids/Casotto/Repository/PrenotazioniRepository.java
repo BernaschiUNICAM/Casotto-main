@@ -3,6 +3,7 @@ package it.unicam.cs.ids.Casotto.Repository;
 import it.unicam.cs.ids.Casotto.Classi.Account;
 import it.unicam.cs.ids.Casotto.Classi.Ombrellone;
 import it.unicam.cs.ids.Casotto.Classi.Prenotazione;
+import it.unicam.cs.ids.Casotto.Classi.Prezzo;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,7 @@ public interface PrenotazioniRepository extends CrudRepository<Prenotazione, Lon
          * @return una {@link List} contenente le prenotazioni con data uguale a quella indicata
          */
         List<Prenotazione> findByDataPrenotazione(LocalDate date);
+
 
         /**
          * Query che estrae la {@link Prenotazione}, effettuata nella data indicata, dall'{@link Account}

@@ -48,6 +48,7 @@ public class Spiaggia {
         return this.prezzoRepository.save(p);
     }
 
+
     /**
      * Associa il {@link Prezzo} passato come parametro all'{@link Ombrellone} indicato
      *

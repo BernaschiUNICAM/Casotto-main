@@ -3,6 +3,7 @@ package it.unicam.cs.ids.Casotto.Repository;
 import it.unicam.cs.ids.Casotto.Classi.Prodotto;
 import it.unicam.cs.ids.Casotto.Classi.Richiesta;
 import it.unicam.cs.ids.Casotto.Classi.Tipo;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
