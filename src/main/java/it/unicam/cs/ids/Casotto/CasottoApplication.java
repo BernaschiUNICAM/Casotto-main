@@ -77,7 +77,8 @@ public class CasottoApplication {
 	private Map<String, Runnable> cambiaMenu(Account account) {
 		return (account==null) ? this.menu.menuInizio() :
 				(account.getLivello()==Livello.CLIENTE) ? this.menu.menuCliente() :
-						(account.getLivello()==Livello.ADDETTO_SPIAGGIA) ? this.menu.menuAddettoSpiaggia() :
+						(account.getLivello()==Livello.PARTECIPANTE) ? this.menu.menuCliente() :
+							(account.getLivello()==Livello.ADDETTO_SPIAGGIA) ? this.menu.menuAddettoSpiaggia() :
 								(account.getLivello()==Livello.BARISTA) ? this.menu.menuBarista() : this.menu.menuGestore();
 	}
 }
